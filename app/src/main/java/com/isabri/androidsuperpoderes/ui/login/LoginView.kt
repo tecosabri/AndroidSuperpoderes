@@ -27,11 +27,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.keepcoding.androidsuperpoderes.R
 
 @Preview
 @Composable
 fun LoginView() {
+
+    val loginViewModel = hiltViewModel<LoginViewModel>()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +43,7 @@ fun LoginView() {
         verticalArrangement = Arrangement.Center
     ) {
         AppLogo()
-        LoginForm()
+        LoginForm(loginViewModel)
     }
 }
 
@@ -73,9 +76,8 @@ fun AppLogo() {
     }
 }
 
-@Preview
 @Composable
-fun LoginForm() {
+fun LoginForm(viewModel: LoginViewModel) {
     Column(
         modifier = Modifier
             .padding(16.dp),
@@ -104,6 +106,7 @@ fun LoginForm() {
             })
 
         LoginButton {
+            viewModel.login(email, password)
             Log.d("Login", "Login button pressed")
         }
     }
