@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -30,9 +31,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.keepcoding.androidsuperpoderes.R
 
-@Preview
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailView(label: String = "Wolverine", photoURL: String = "https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman.JPG") {
+fun DetailView(label: String = "Wolverine", photoURL: String = "https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman.JPG", onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .size(300.dp)
@@ -42,6 +44,7 @@ fun DetailView(label: String = "Wolverine", photoURL: String = "https://upload.w
         elevation = 20.dp,
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(4.dp, Color.LightGray),
+        onClick = onClick
     ) {
         Box(
             modifier = Modifier

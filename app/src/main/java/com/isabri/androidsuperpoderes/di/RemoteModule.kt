@@ -3,6 +3,7 @@ package com.isabri.androidsuperpoderes.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.isabri.androidsuperpoderes.data.remote.DragonBallAPI
+import com.isabri.androidsuperpoderes.utils.Constant
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -18,6 +19,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
+
+
 
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
@@ -43,18 +46,15 @@ object RemoteModule {
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val originalRequest = chain.request()
+                val URLWithApiKey = originalRequest.url.newBuilder()
+                    .addQueryParameter("ts", Constant.ts)
+                    .addQueryParameter("apikey", Constant.PUBLIC_KEY)
+                    .addQueryParameter("hash", Constant.getHash())
+                    .build()
                 val newRequest = originalRequest.newBuilder()
-//                .header("Authorization", "Bearer $TOKEN")
-                    .header("Content-Type", "Application/Json")
-                    .header("Authorization", sharedPreferences.getString("CREDENTIAL", "")!!)
+                    .url(URLWithApiKey)
                     .build()
                 chain.proceed(newRequest)
-            }
-            .authenticator { _, response ->
-                    response.request.newBuilder().header(
-                        "Authorization",
-                        "Bearer ${sharedPreferences.getString("TOKEN", null)}"
-                    ).build()
             }
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -63,7 +63,7 @@ object RemoteModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://dragonball.keepcoding.education/")
+            .baseUrl(Constant.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()

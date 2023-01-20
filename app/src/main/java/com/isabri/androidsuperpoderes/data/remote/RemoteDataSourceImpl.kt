@@ -11,4 +11,11 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI): 
         Log.d("TOKEN", result)
         return result
     }
+
+    override suspend fun getCharacters(): String {
+        Log.d("LOG", api.getCharacters().toString())
+        return ""
+    }
+
+
 }
