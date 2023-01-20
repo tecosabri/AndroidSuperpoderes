@@ -2,7 +2,7 @@ package com.isabri.androidsuperpoderes.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.isabri.androidsuperpoderes.data.remote.DragonBallAPI
+import com.isabri.androidsuperpoderes.data.remote.MarvelAPI
 import com.isabri.androidsuperpoderes.utils.Constant
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -24,7 +24,7 @@ object RemoteModule {
 
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("NAME", Context.MODE_PRIVATE)
+        return context.getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
 
     @Provides
@@ -70,8 +70,8 @@ object RemoteModule {
     }
 
     @Provides
-    fun provideAPI(retrofit: Retrofit): DragonBallAPI {
-        return retrofit.create(DragonBallAPI::class.java)
+    fun provideAPI(retrofit: Retrofit): MarvelAPI {
+        return retrofit.create(MarvelAPI::class.java)
     }
 }
 

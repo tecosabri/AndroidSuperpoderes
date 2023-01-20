@@ -20,6 +20,9 @@ class Constant {
         const val PUBLIC_KEY = "5ed7dc76b420bc84a2d4a15450c50f4a"
         private const val PRIVATE_KEY = "106d4a90fd6df27742659f14d4c4a26015917214"
 
+        // SHARED PREFERENCES
+        const val SHARED_PREFERENCES_NAME = "sharedPreferencesName"
+
         private fun getMD5(input:String): String {
             val md = MessageDigest.getInstance("MD5")
             return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')

@@ -1,10 +1,9 @@
 package com.isabri.androidsuperpoderes.data.remote
 
 import android.util.Log
-import okhttp3.Credentials
 import javax.inject.Inject
 
-class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI): RemoteDataSource {
+class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): RemoteDataSource {
 
     override suspend fun getToken(): String {
         val result = api.getToken()
@@ -13,7 +12,8 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI): 
     }
 
     override suspend fun getCharacters(): String {
-        Log.d("LOG", api.getCharacters().toString())
+        val characters = api.getCharactersDataWrapper().data?.results
+        Log.d("LOG", characters?.get(0)?.name.toString())
         return ""
     }
 
