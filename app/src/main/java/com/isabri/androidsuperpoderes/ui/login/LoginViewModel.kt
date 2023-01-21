@@ -16,25 +16,4 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: Repository, private val sharedPreferences: SharedPreferences): ViewModel() {
 
-    fun login(email: String, password: String) {
-        if(sharedPreferences.getString("TOKEN", null) == null) {
-            sharedPreferences.edit().putString("CREDENTIAL", getCredentials(email, password)).apply()
-            getToken()
-        } else {
-            Log.d("TOKEN", "The token is ${sharedPreferences.getString("TOKEN", null)}")
-        }
-    }
-
-    private fun getToken() {
-        viewModelScope.launch {
-            val token = withContext(Dispatchers.IO) {
-                repository.getToken()
-            }
-            sharedPreferences.edit().putString("TOKEN", token).apply()
-        }
-    }
-
-    private fun getCredentials(email: String, password: String): String {
-        return Credentials.basic(email, password, StandardCharsets.UTF_8)
-    }
 }

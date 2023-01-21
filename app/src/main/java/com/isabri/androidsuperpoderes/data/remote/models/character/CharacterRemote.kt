@@ -1,5 +1,6 @@
-package com.isabri.androidsuperpoderes.data.remote.models
+package com.isabri.androidsuperpoderes.data.remote.models.character
 
+import com.isabri.androidsuperpoderes.data.remote.models.ThumbnailRemote
 import com.squareup.moshi.Json
 
 data class CharacterRemote(

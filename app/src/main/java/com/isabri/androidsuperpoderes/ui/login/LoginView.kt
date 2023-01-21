@@ -106,7 +106,6 @@ fun LoginForm(viewModel: LoginViewModel) {
             })
 
         LoginButton {
-            viewModel.login(email, password)
             Log.d("Login", "Login button pressed")
         }
     }

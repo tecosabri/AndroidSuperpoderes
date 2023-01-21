@@ -1,15 +1,12 @@
 package com.isabri.androidsuperpoderes.data.remote
 
-import com.isabri.androidsuperpoderes.data.remote.models.CharactersDataWrapper
+import com.isabri.androidsuperpoderes.data.remote.models.character.CharactersDataWrapper
 import com.isabri.androidsuperpoderes.utils.Constant
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.POST
 
 interface MarvelAPI {
 
-    @POST("api/auth/login")
-    suspend fun getToken(): String
-
     @GET(Constant.CHARACTERS_ENDPOINT)
-    suspend fun getCharactersDataWrapper(): CharactersDataWrapper
+    suspend fun getCharactersDataWrapper(): Response<CharactersDataWrapper>
 }

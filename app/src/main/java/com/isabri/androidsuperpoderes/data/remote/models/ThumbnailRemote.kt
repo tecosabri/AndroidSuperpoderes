@@ -4,5 +4,6 @@ import com.squareup.moshi.Json
 
 data class ThumbnailRemote(
     @Json(name = "path") val path: String?,
-    @Json(name = "extension") val extension: String?
+    @Json(name = "extension") val extension: String?,
+    val completePath: String = "$path.$extension"
 )

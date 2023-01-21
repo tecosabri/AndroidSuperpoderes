@@ -15,17 +15,21 @@ import com.isabri.androidsuperpoderes.ui.detail.DetailView
 @Composable
 fun CharactersListView(characters: List<String> = listOf("Spiderman", "Wolverine", "Other")) {
     val heroListViewModel = hiltViewModel<HeroListViewModel>()
-
+    val heros = heroListViewModel.characters.collectAsState()
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        itemsIndexed(characters) { _, hero ->
-            DetailView(label = hero, photoURL = "https://upload.wikimedia.org/wikipedia/ar/7/70/WOlverine.jpg") {
-                heroListViewModel.getCharacters()
+        itemsIndexed(heros.value) { _, hero ->
+            hero.name?.apply {
+                hero.thumbnail?.path?.apply {
+                    DetailView(label = hero.name, photoURL = hero.thumbnail.completePath) {
+                        heroListViewModel.getCharacters()
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

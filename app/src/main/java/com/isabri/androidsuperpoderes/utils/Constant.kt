@@ -23,6 +23,10 @@ class Constant {
         // SHARED PREFERENCES
         const val SHARED_PREFERENCES_NAME = "sharedPreferencesName"
 
+        // FAILURE ERRORS
+        const val ERR_NONE = "No error"
+        const val ERR_CHARACTERS_FETCHING = "Error fetching characters"
+
         private fun getMD5(input:String): String {
             val md = MessageDigest.getInstance("MD5")
             return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')

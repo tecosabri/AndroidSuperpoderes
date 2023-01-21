@@ -1,21 +1,21 @@
 package com.isabri.androidsuperpoderes.data.remote
 
-import android.util.Log
+import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
+import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
+import com.isabri.androidsuperpoderes.utils.Constant
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): RemoteDataSource {
 
-    override suspend fun getToken(): String {
-        val result = api.getToken()
-        Log.d("TOKEN", result)
-        return result
+    override suspend fun getCharacters(): CharactersListState {
+        val charactersDataWrapper= api.getCharactersDataWrapper()
+
+        if (charactersDataWrapper.isSuccessful) {
+            val remoteCharacters = charactersDataWrapper.body()?.data?.results
+            remoteCharacters?.apply {
+                return CharactersListState.Success(CharacterMapper.mapRemoteCharactersToCharacters(this))
+            }
+        }
+        return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
     }
-
-    override suspend fun getCharacters(): String {
-        val characters = api.getCharactersDataWrapper().data?.results
-        Log.d("LOG", characters?.get(0)?.name.toString())
-        return ""
-    }
-
-
 }
