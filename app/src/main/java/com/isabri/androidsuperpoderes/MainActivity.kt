@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.isabri.androidsuperpoderes.di.ViewModelFactoryProvider
 import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListView
+import com.isabri.androidsuperpoderes.ui.comicsList.ComicsListView
 import com.isabri.androidsuperpoderes.ui.seriesList.SeriesListView
 import com.isabri.androidsuperpoderes.ui.seriesList.SeriesListViewModel
 import com.isabri.androidsuperpoderes.ui.theme.AndroidSuperpoderesTheme
@@ -37,19 +38,33 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = Constant.NAV_CHARACTERS){
+//                        composable(route = Constant.NAV_CHARACTERS){
+//                            CharactersListView { id ->
+//                                navController.navigate("${Constant.NAV_SERIES}/$id")
+//                            }
+//                        }
+//                        composable(
+//                            route = "${Constant.NAV_SERIES}/{${Constant.PATH_CHARACTER_ID}}",
+//                            arguments = listOf(navArgument(Constant.PATH_CHARACTER_ID) {
+//                                this.type = NavType.IntType
+//                            })
+//                        ){
+//                            val id = it.arguments?.getInt(Constant.PATH_CHARACTER_ID) ?: -1
+//                            SeriesListView(characterId = id.toString())
+//                        }
                         composable(route = Constant.NAV_CHARACTERS){
                             CharactersListView { id ->
-                                navController.navigate("${Constant.NAV_SERIES}/$id")
+                                navController.navigate("${Constant.NAV_COMICS}/$id")
                             }
                         }
                         composable(
-                            route = "${Constant.NAV_SERIES}/{${Constant.PATH_CHARACTER_ID}}",
+                            route = "${Constant.NAV_COMICS}/{${Constant.PATH_CHARACTER_ID}}",
                             arguments = listOf(navArgument(Constant.PATH_CHARACTER_ID) {
                                 this.type = NavType.IntType
                             })
                         ){
                             val id = it.arguments?.getInt(Constant.PATH_CHARACTER_ID) ?: -1
-                            SeriesListView(characterId = id.toString())
+                            ComicsListView(characterId = id.toString())
                         }
                     }
                 }

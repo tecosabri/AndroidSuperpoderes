@@ -11,6 +11,7 @@ class Constant {
         const val BASE_URL = "https://gateway.marvel.com"
         const val CHARACTERS_ENDPOINT = "/v1/public/characters"
         const val SERIES_ENDPOINT = "/v1/public/characters/{characterId}/series"
+        const val COMICS_ENDPOINT = "/v1/public/characters/{characterId}/comics"
 
         // PATHS
         const val PATH_CHARACTER_ID = "characterId"
@@ -31,10 +32,12 @@ class Constant {
         const val ERR_NONE = "No error"
         const val ERR_CHARACTERS_FETCHING = "Error fetching characters"
         const val ERR_SERIES_FETCHING = "Error fetching series"
+        const val ERR_COMICS_FETCHING = "Error fetching comics"
 
         // NAVIGATION
         const val NAV_CHARACTERS = "charactersList"
         const val NAV_SERIES = "seriesList"
+        const val NAV_COMICS = "comicsList"
 
         private fun getMD5(input:String): String {
             val md = MessageDigest.getInstance("MD5")

@@ -6,10 +6,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.isabri.androidsuperpoderes.ui.detail.DetailView
+import com.isabri.androidsuperpoderes.ui.components.DetailView
 
 @Composable
 fun CharactersListView(onClicked: (Int) -> Unit) {

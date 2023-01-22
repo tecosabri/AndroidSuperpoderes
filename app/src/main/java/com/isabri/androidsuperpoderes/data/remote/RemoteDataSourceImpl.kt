@@ -1,9 +1,12 @@
 package com.isabri.androidsuperpoderes.data.remote
 
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
+import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
 import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
+import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
+import com.isabri.androidsuperpoderes.domain.models.Comic
 import com.isabri.androidsuperpoderes.utils.Constant
 import javax.inject.Inject
 
@@ -31,5 +34,17 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): Remo
             }
         }
         return SeriesListState.Failure(Constant.ERR_SERIES_FETCHING)
+    }
+
+    override suspend fun getComics(characterId: String): ComicsListState {
+        val comicsDataWrapper = api.getComicsDataWrapper(characterId)
+
+        if(comicsDataWrapper.isSuccessful) {
+            val remoteComics = comicsDataWrapper.body()?.data?.results
+            remoteComics?.apply {
+                return ComicsListState.Success(ComicMapper.mapRemoteComicsToComics(remoteComics))
+            }
+        }
+        return ComicsListState.Failure(Constant.ERR_COMICS_FETCHING)
     }
 }

@@ -1,4 +1,4 @@
-package com.isabri.androidsuperpoderes.ui.seriesList
+package com.isabri.androidsuperpoderes.ui.comicsList
 
 import android.app.Activity
 import android.util.Log
@@ -17,25 +17,25 @@ import dagger.hilt.android.EntryPointAccessors
 
 
 @Composable
-fun SeriesListView(characterId: String) {
+fun ComicsListView(characterId: String) {
     val factory = EntryPointAccessors.fromActivity(
         LocalContext.current as Activity,
         ViewModelFactoryProvider::class.java
-    ).seriesListViewModelFactory()
-    val seriesListViewModel: SeriesListViewModel = viewModel(factory = SeriesListViewModel.provideSeriesListViewModelFactory(factory, characterId))
-    val series = seriesListViewModel.series.collectAsState()
+    ).comicsListViewModelFactory()
+    val comicsListViewModel: ComicsListViewModel = viewModel(factory = ComicsListViewModel.provideComicsListViewModelFactory(factory, characterId))
+    val comics = comicsListViewModel.comics.collectAsState()
 
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        itemsIndexed(series.value) { _, serie ->
-            serie.apply {
-                serie.thumbnail?.path?.apply {
-                    serie.title?.apply {
-                        DetailView(label = this, photoURL = serie.thumbnail.completePath) {
-                            Log.d("TAG", "Pressed serie $this")
+        itemsIndexed(comics.value) { _, comic ->
+            comic.apply {
+                comic.thumbnail?.path?.apply {
+                    comic.title?.apply {
+                        DetailView(label = this, photoURL = comic.thumbnail.completePath) {
+                            Log.d("TAG", "Pressed comic $this")
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))

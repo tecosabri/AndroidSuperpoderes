@@ -1,4 +1,4 @@
-package com.isabri.androidsuperpoderes.ui.detail
+package com.isabri.androidsuperpoderes.ui.components
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
