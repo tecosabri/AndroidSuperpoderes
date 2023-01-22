@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.isabri.androidsuperpoderes.ui.detail.DetailView
 
 @Composable
-fun CharactersListView(onClicked: () -> Unit) {
+fun CharactersListView(onClicked: (Int) -> Unit) {
     val charactersListViewModel = hiltViewModel<CharactersListViewModel>()
     val characters = charactersListViewModel.characters.collectAsState()
     LazyColumn(
@@ -24,7 +24,9 @@ fun CharactersListView(onClicked: () -> Unit) {
             character.name?.apply {
                 character.thumbnail?.path?.apply {
                     DetailView(label = character.name, photoURL = character.thumbnail.completePath) {
-                        onClicked()
+                        character.id?.apply {
+                            onClicked(this)
+                        }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
