@@ -1,4 +1,4 @@
-package com.isabri.androidsuperpoderes.ui.herolist
+package com.isabri.androidsuperpoderes.ui.charactersList
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,21 +11,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.isabri.androidsuperpoderes.ui.detail.DetailView
 
-@Preview
 @Composable
-fun CharactersListView(characters: List<String> = listOf("Spiderman", "Wolverine", "Other")) {
-    val heroListViewModel = hiltViewModel<HeroListViewModel>()
-    val heros = heroListViewModel.characters.collectAsState()
+fun CharactersListView(onClicked: () -> Unit) {
+    val charactersListViewModel = hiltViewModel<CharactersListViewModel>()
+    val characters = charactersListViewModel.characters.collectAsState()
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        itemsIndexed(heros.value) { _, hero ->
-            hero.name?.apply {
-                hero.thumbnail?.path?.apply {
-                    DetailView(label = hero.name, photoURL = hero.thumbnail.completePath) {
-                        heroListViewModel.getCharacters()
+        itemsIndexed(characters.value) { _, character ->
+            character.name?.apply {
+                character.thumbnail?.path?.apply {
+                    DetailView(label = character.name, photoURL = character.thumbnail.completePath) {
+                        onClicked()
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }

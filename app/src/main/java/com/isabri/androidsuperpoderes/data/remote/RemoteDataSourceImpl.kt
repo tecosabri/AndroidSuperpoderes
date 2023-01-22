@@ -1,7 +1,9 @@
 package com.isabri.androidsuperpoderes.data.remote
 
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
+import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
 import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
+import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import com.isabri.androidsuperpoderes.utils.Constant
 import javax.inject.Inject
 
@@ -17,5 +19,17 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): Remo
             }
         }
         return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
+    }
+
+    override suspend fun getSeries(characterId: String): SeriesListState {
+        val seriesDataWrapper = api.getSeriesDataWrapper(characterId)
+
+        if (seriesDataWrapper.isSuccessful) {
+            val remoteSeries = seriesDataWrapper.body()?.data?.results
+            remoteSeries?.apply {
+                return SeriesListState.Success(SerieMapper.mapSeriesRemoteToSeries(remoteSeries))
+            }
+        }
+        return SeriesListState.Failure(Constant.ERR_SERIES_FETCHING)
     }
 }
