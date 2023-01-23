@@ -34,7 +34,7 @@ import com.keepcoding.androidsuperpoderes.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailView(label: String = "Wolverine", photoURL: String = "https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman.JPG", onClick: () -> Unit) {
+fun DetailView(label: String, photoURL: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .size(300.dp)

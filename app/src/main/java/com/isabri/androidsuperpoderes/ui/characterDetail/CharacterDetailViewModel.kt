@@ -13,6 +13,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel @AssistedInject constructor(private val repository: Repository, @Assisted private val characterId: String): ViewModel() {
@@ -36,6 +37,16 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
                 is CharactersListState.Failure -> _fetchingError.value = Constant.ERR_CHARACTERS_FETCHING
                 is CharactersListState.Success -> _character.value = characterListState.characters.get(0)
             }
+        }
+    }
+
+    fun onClickFavorite(favorite: Boolean) {
+        setFavorite(favorite)
+    }
+
+    private fun setFavorite(favorite: Boolean) {
+        _character.update { character ->
+            character.copy(favorite = favorite)
         }
     }
 
