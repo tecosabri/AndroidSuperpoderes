@@ -1,5 +1,6 @@
 package com.isabri.androidsuperpoderes.di
 
+import com.isabri.androidsuperpoderes.ui.characterDetail.CharacterDetailViewModel
 import com.isabri.androidsuperpoderes.ui.comicsList.ComicsListViewModel
 import com.isabri.androidsuperpoderes.ui.seriesList.SeriesListViewModel
 import dagger.hilt.EntryPoint
@@ -11,4 +12,5 @@ import dagger.hilt.android.components.ActivityComponent
 interface ViewModelFactoryProvider {
     fun seriesListViewModelFactory(): SeriesListViewModel.Factory
     fun comicsListViewModelFactory(): ComicsListViewModel.Factory
+    fun characterDetailViewModelFactory(): CharacterDetailViewModel.Factory
 }

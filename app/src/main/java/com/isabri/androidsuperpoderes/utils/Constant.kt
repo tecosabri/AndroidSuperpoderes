@@ -1,8 +1,11 @@
 package com.isabri.androidsuperpoderes.utils
 
+import com.isabri.androidsuperpoderes.data.remote.models.Thumbnail
+import com.isabri.androidsuperpoderes.data.remote.models.character.SeriesList
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.sql.Timestamp
+import com.isabri.androidsuperpoderes.domain.models.Character
 
 class Constant {
 
@@ -10,6 +13,7 @@ class Constant {
         // ENDPOINTS
         const val BASE_URL = "https://gateway.marvel.com"
         const val CHARACTERS_ENDPOINT = "/v1/public/characters"
+        const val CHARACTER_ENDPOINT = "/v1/public/characters/{characterId}"
         const val SERIES_ENDPOINT = "/v1/public/characters/{characterId}/series"
         const val COMICS_ENDPOINT = "/v1/public/characters/{characterId}/comics"
 
@@ -36,6 +40,7 @@ class Constant {
 
         // NAVIGATION
         const val NAV_CHARACTERS = "charactersList"
+        const val NAV_CHARACTER = "character"
         const val NAV_SERIES = "seriesList"
         const val NAV_COMICS = "comicsList"
 
@@ -46,6 +51,16 @@ class Constant {
 
         fun getHash(): String {
             return getMD5("$ts$PRIVATE_KEY$PUBLIC_KEY")
+        }
+
+        fun getRandomCharacter(): Character {
+            return Character(
+                0,
+                "randomName",
+                "randomDescription",
+                Thumbnail("https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman", "JPG"),
+                SeriesList(emptyList())
+            )
         }
     }
 }

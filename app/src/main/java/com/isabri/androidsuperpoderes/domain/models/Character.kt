@@ -9,5 +9,5 @@ data class Character (
     @Json(name = "name") val name: String?,
     @Json(name = "description") val description: String?,
     @Json(name = "thumbnail") val thumbnail: Thumbnail?,
-    @Json(name = "series") val series: SeriesList
+    @Json(name = "series") val series: SeriesList?
 )

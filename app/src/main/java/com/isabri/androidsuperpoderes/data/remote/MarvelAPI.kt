@@ -18,4 +18,7 @@ interface MarvelAPI {
 
     @GET(Constant.COMICS_ENDPOINT)
     suspend fun getComicsDataWrapper(@Path(Constant.PATH_CHARACTER_ID) characterId: String): Response<ComicDataWrapper>
+
+    @GET(Constant.CHARACTER_ENDPOINT)
+    suspend fun getCharacterDataWrapper(@Path(Constant.PATH_CHARACTER_ID) characterId: String): Response<CharactersDataWrapper>
 }

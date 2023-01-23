@@ -13,6 +13,10 @@ class RepositoryImpl @Inject constructor(private val remoteDataSource: RemoteDat
         return remoteDataSource.getCharacters()
     }
 
+    override suspend fun getCharacter(characterId: String): CharactersListState {
+        return remoteDataSource.getCharacter(characterId)
+    }
+
     override suspend fun getSeries(characterId: String): SeriesListState {
         return remoteDataSource.getSeries(characterId)
     }

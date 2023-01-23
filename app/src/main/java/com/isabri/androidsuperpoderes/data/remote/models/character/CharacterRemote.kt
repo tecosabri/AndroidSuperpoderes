@@ -8,11 +8,11 @@ data class CharacterRemote(
     @Json(name = "name") val name: String?,
     @Json(name = "description") val description: String?,
     @Json(name = "thumbnail") val thumbnail: Thumbnail?,
-    @Json(name = "series") val series: SeriesList
+    @Json(name = "series") val series: SeriesList?
     )
 
 data class SeriesList(
-    @Json(name = "items") val items: List<SeriesSummary>
+    @Json(name = "items") val items: List<SeriesSummary>?
     )
 
 data class SeriesSummary(
