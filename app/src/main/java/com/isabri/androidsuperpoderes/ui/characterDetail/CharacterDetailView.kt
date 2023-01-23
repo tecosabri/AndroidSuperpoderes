@@ -21,11 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.isabri.androidsuperpoderes.di.ViewModelFactoryProvider
 import com.isabri.androidsuperpoderes.ui.components.DetailImage
+import com.isabri.androidsuperpoderes.utils.Constant
 import dagger.hilt.android.EntryPointAccessors
 
 
 @Composable
-fun CharacterDetailView(characterId: String) {
+fun CharacterDetailView(characterId: String, onClickedButton: (String) -> Unit) {
     val factory = EntryPointAccessors.fromActivity(
         LocalContext.current as Activity,
         ViewModelFactoryProvider::class.java
@@ -45,7 +46,7 @@ fun CharacterDetailView(characterId: String) {
             verticalArrangement = Arrangement.Center
         ) {
             NameText(name = character.value.name.toString())
-            NavigationButtonsRow()
+            NavigationButtonsRow(onClickedButton)
             DescriptionText(text = character.value.description.toString())
         }
     }
@@ -76,7 +77,7 @@ fun DescriptionText(text: String) {
 }
 
 @Composable
-fun NavigationButtonsRow() {
+fun NavigationButtonsRow(onClickedButton: (String) -> Unit) {
     Row(
         modifier = Modifier
             .width(500.dp)
@@ -85,10 +86,12 @@ fun NavigationButtonsRow() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly){
         NavigationButton(text = "Series") {
-            Log.d("Series", "Series")
+            onClickedButton(Constant.NAV_SERIES)
+            Log.d("SERIES", "Series")
         }
         NavigationButton(text = "Comics") {
-            Log.d("Comics","Comics")
+            onClickedButton(Constant.NAV_COMICS)
+            Log.d("Comics", "Comics")
         }
     }
 }
