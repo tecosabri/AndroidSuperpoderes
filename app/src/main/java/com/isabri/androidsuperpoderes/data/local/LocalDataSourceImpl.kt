@@ -10,6 +10,10 @@ class LocalDataSourceImpl @Inject constructor(private val characterDAO: Characte
         return characterDAO.getAllCharacters()
     }
 
+    override fun getCharacter(characterId: String): List<CharacterEntity> {
+        return characterDAO.getCharacterById(characterId)
+    }
+
     override fun getFavoriteCharacters(): List<CharacterEntity> {
         return characterDAO.getAllFavoriteCharacters()
     }

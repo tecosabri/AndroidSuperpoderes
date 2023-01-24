@@ -36,7 +36,11 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCharacter(characterId: String): CharactersListState {
-        return remoteDataSource.getCharacter(characterId)
+        // At this point, the character should have been stored
+        var localCharacter = localDataSource.getCharacter(characterId)
+        if(localCharacter.isEmpty()) return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
+        // Character is already locally stored
+        return CharactersListState.Success(CharacterMapper.mapCharacterEntitiesToCharacters(localCharacter))
     }
 
     override suspend fun getSeries(characterId: String): SeriesListState {

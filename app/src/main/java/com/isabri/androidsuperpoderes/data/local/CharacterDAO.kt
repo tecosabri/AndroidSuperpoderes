@@ -16,6 +16,10 @@ interface CharacterDAO {
     fun getAllCharacters(): List<CharacterEntity>
 
     @WorkerThread
+    @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE id = :characterId")
+    fun getCharacterById(characterId: String): List<CharacterEntity>
+
+    @WorkerThread
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE favorite = 1")
     fun getAllFavoriteCharacters(): List<CharacterEntity>
 
