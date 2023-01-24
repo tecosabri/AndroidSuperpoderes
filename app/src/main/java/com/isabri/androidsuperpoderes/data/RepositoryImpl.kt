@@ -2,6 +2,7 @@ package com.isabri.androidsuperpoderes.data
 
 import android.util.Log
 import com.isabri.androidsuperpoderes.data.local.LocalDataSource
+import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
 import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
@@ -13,6 +14,9 @@ import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.domain.models.Serie
 import com.isabri.androidsuperpoderes.utils.Constant
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -36,20 +40,13 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharacter(characterId: String): CharactersListState {
+    override fun getCharacter(characterId: String): Flow<List<Character>> {
         // At this point, the character should have been stored
-        var localCharacter = localDataSource.getCharacter(characterId)
-        if(localCharacter.isEmpty()) return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
-        // Character is already locally stored
-        return CharactersListState.Success(CharacterMapper.mapCharacterEntitiesToCharacters(localCharacter))
+        return localDataSource.getCharacter(characterId).map { CharacterMapper.mapCharacterEntitiesToCharacters(it) }
     }
 
     override fun updateCharacter(character: Character) {
-        var localCharacter = localDataSource.getCharacter(character.id.toString())
-        Log.d("LOCAL CHARACTER BEFORE", "LOCAL CHARACTER BEFORE UPDATING is ${localCharacter.first().favorite}")
-        if(localCharacter.isNotEmpty()) localDataSource.updateCharacter(CharacterMapper.mapCharacterToCharacterEntity(character))
-        localCharacter = localDataSource.getCharacter(character.id.toString())
-        Log.d("LOCAL CHARACTER AFTER", "LOCAL CHARACTER AFTER UPDATING is ${localCharacter.first().favorite}")
+        localDataSource.updateCharacter(CharacterMapper.mapCharacterToCharacterEntity(character))
     }
 
     override suspend fun getSeries(characterId: String): SeriesListState {

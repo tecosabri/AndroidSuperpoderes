@@ -8,16 +8,18 @@ import com.isabri.androidsuperpoderes.data.local.models.SerieEntity
 import com.isabri.androidsuperpoderes.data.local.models.relations.CharacterWithComics
 import com.isabri.androidsuperpoderes.data.local.models.relations.CharacterWithSeries
 import com.isabri.androidsuperpoderes.utils.Constant
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDAO {
+
     @WorkerThread
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS}")
     fun getAllCharacters(): List<CharacterEntity>
 
     @WorkerThread
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE id = :characterId")
-    fun getCharacterById(characterId: String): List<CharacterEntity>
+    fun getCharacterById(characterId: String): Flow<List<CharacterEntity>>
 
     @Update(entity = CharacterEntity::class)
     fun updateCharacter(characterEntity: CharacterEntity)

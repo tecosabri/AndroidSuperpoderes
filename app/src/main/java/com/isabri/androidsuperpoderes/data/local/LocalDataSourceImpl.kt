@@ -3,14 +3,16 @@ package com.isabri.androidsuperpoderes.data.local
 import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.data.local.models.ComicEntity
 import com.isabri.androidsuperpoderes.data.local.models.SerieEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val characterDAO: CharacterDAO): LocalDataSource {
+
     override fun getCharacters(): List<CharacterEntity> {
         return characterDAO.getAllCharacters()
     }
 
-    override fun getCharacter(characterId: String): List<CharacterEntity> {
+    override fun getCharacter(characterId: String): Flow<List<CharacterEntity>> {
         return characterDAO.getCharacterById(characterId)
     }
 
