@@ -17,7 +17,6 @@ data class CharacterEntity (
     val name: String?,
     val description: String?,
     @Embedded val thumbnail: Thumbnail?,
-//    @Embedded val series: SeriesListEntity?,
     var favorite: Boolean // Only local
 )
 

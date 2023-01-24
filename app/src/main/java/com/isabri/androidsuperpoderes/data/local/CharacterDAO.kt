@@ -19,7 +19,7 @@ interface CharacterDAO {
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(characters: List<CharacterEntity>)
+    fun insertAllCharacters(characters: List<CharacterEntity>)
 
     @Transaction
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE id = :characterId")
@@ -27,5 +27,5 @@ interface CharacterDAO {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(series: SerieEntity)
+    fun insertAllSeries(series: List<SerieEntity>)
 }

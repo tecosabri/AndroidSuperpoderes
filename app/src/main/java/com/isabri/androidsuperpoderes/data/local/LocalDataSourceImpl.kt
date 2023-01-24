@@ -1,6 +1,7 @@
 package com.isabri.androidsuperpoderes.data.local
 
 import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
+import com.isabri.androidsuperpoderes.data.local.models.SerieEntity
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val characterDAO: CharacterDAO): LocalDataSource {
@@ -13,6 +14,16 @@ class LocalDataSourceImpl @Inject constructor(private val characterDAO: Characte
     }
 
     override fun insertCharacters(characterEntities: List<CharacterEntity>) {
-        characterDAO.insertAll(characterEntities)
+        characterDAO.insertAllCharacters(characterEntities)
+    }
+
+    override fun getSeriesByCharacterId(characterId: String): List<SerieEntity> {
+        val characterWithSeries = characterDAO.getCharactersWithSeries(characterId)
+        if(characterWithSeries.isNotEmpty()) return characterWithSeries[0].series
+        return emptyList()
+    }
+
+    override fun insertSeries(serieEntities: List<SerieEntity>) {
+        characterDAO.insertAllSeries(serieEntities)
     }
 }
