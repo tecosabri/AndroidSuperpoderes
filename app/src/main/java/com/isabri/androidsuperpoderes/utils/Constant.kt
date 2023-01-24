@@ -44,6 +44,9 @@ class Constant {
         const val NAV_SERIES = "seriesList"
         const val NAV_COMICS = "comicsList"
 
+        // DATABASE TABLE NAMES
+        const val DB_CHARACTERS = "Characters"
+
         private fun getMD5(input:String): String {
             val md = MessageDigest.getInstance("MD5")
             return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
