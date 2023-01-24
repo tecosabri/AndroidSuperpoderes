@@ -13,6 +13,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -45,9 +46,9 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
     }
 
     private fun setFavorite(favorite: Boolean) {
-        _character.update { character ->
-            character.copy(favorite = favorite)
-        }
+        val newCharacter = _character.value.copy(favorite = favorite)
+        repository.updateCharacter(newCharacter)
+        _character.value = newCharacter
     }
 
     @AssistedFactory

@@ -10,6 +10,7 @@ import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListSt
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import com.isabri.androidsuperpoderes.domain.Repository
+import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.domain.models.Serie
 import com.isabri.androidsuperpoderes.utils.Constant
 import javax.inject.Inject
@@ -41,6 +42,14 @@ class RepositoryImpl @Inject constructor(
         if(localCharacter.isEmpty()) return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
         // Character is already locally stored
         return CharactersListState.Success(CharacterMapper.mapCharacterEntitiesToCharacters(localCharacter))
+    }
+
+    override fun updateCharacter(character: Character) {
+        var localCharacter = localDataSource.getCharacter(character.id.toString())
+        Log.d("LOCAL CHARACTER BEFORE", "LOCAL CHARACTER BEFORE UPDATING is ${localCharacter.first().favorite}")
+        if(localCharacter.isNotEmpty()) localDataSource.updateCharacter(CharacterMapper.mapCharacterToCharacterEntity(character))
+        localCharacter = localDataSource.getCharacter(character.id.toString())
+        Log.d("LOCAL CHARACTER AFTER", "LOCAL CHARACTER AFTER UPDATING is ${localCharacter.first().favorite}")
     }
 
     override suspend fun getSeries(characterId: String): SeriesListState {

@@ -62,7 +62,8 @@ class Constant {
                 "randomName",
                 "randomDescription",
                 Thumbnail("https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman", "JPG"),
-                SeriesList(emptyList())
+                SeriesList(emptyList()),
+                false
             )
         }
     }

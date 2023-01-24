@@ -10,5 +10,5 @@ data class Character (
     val description: String?,
     val thumbnail: Thumbnail?,
     val series: SeriesList?,
-    var favorite: Boolean = false // Only local
+    var favorite: Boolean // Only local
 )

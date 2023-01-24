@@ -17,7 +17,8 @@ class CharacterMapper {
                 characterRemote.name,
                 characterRemote.description,
                 characterRemote.thumbnail,
-                characterRemote.series)
+                characterRemote.series,
+            false)
         }
 
         fun mapCharacterEntitiesToCharacters(characterEntities: List<CharacterEntity>): List<Character> {
@@ -29,7 +30,8 @@ class CharacterMapper {
                 characterEntity.name,
                 characterEntity.description,
                 characterEntity.thumbnail,
-                null)
+                null,
+            characterEntity.favorite)
         }
 
         fun mapRemoteCharactersToCharacterEntities(charactersRemote: List<CharacterRemote>): List<CharacterEntity> {
@@ -48,7 +50,7 @@ class CharacterMapper {
         fun mapCharactersToCharacterEntities(characters: List<Character>): List<CharacterEntity> {
             return characters.map { mapCharacterToCharacterEntity(it) }
         }
-        private fun mapCharacterToCharacterEntity(character: Character): CharacterEntity {
+        fun mapCharacterToCharacterEntity(character: Character): CharacterEntity {
             return CharacterEntity(
                 character.id,
                 character.name,

@@ -8,6 +8,7 @@ interface LocalDataSource {
     fun getCharacters(): List<CharacterEntity>
     fun getCharacter(characterId: String): List<CharacterEntity>
     fun getFavoriteCharacters(): List<CharacterEntity>
+    fun updateCharacter(characterEntity: CharacterEntity)
     fun insertCharacters(characterEntities: List<CharacterEntity>)
     fun getSeriesByCharacterId(characterId: String): List<SerieEntity>
     fun insertSeries(serieEntities: List<SerieEntity>)
