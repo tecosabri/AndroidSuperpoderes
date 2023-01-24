@@ -3,7 +3,9 @@ package com.isabri.androidsuperpoderes.data.local
 import androidx.annotation.WorkerThread
 import androidx.room.*
 import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
+import com.isabri.androidsuperpoderes.data.local.models.ComicEntity
 import com.isabri.androidsuperpoderes.data.local.models.SerieEntity
+import com.isabri.androidsuperpoderes.data.local.models.relations.CharacterWithComics
 import com.isabri.androidsuperpoderes.data.local.models.relations.CharacterWithSeries
 import com.isabri.androidsuperpoderes.utils.Constant
 
@@ -28,4 +30,12 @@ interface CharacterDAO {
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllSeries(series: List<SerieEntity>)
+
+    @Transaction
+    @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE id = :characterId")
+    fun getCharactersWithComics(characterId: String): List<CharacterWithComics>
+
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllComics(comics: List<ComicEntity>)
 }

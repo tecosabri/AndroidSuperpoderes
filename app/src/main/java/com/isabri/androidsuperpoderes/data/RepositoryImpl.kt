@@ -3,6 +3,7 @@ package com.isabri.androidsuperpoderes.data
 import android.util.Log
 import com.isabri.androidsuperpoderes.data.local.LocalDataSource
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
+import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
 import com.isabri.androidsuperpoderes.data.remote.RemoteDataSource
 import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
@@ -55,7 +56,19 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun getComics(characterId: String): ComicsListState {
-        return remoteDataSource.getComics(characterId)
+        var localComics = localDataSource.getComicsByCharacterId(characterId)
+        // Comics already locally stored
+        if(localComics.isNotEmpty()) return ComicsListState.Success(ComicMapper.mapComicEntitiesToComics(localComics))
+        // Comics not locally stored -> store them
+        val comicsListState = remoteDataSource.getComics(characterId)
+        when(comicsListState){
+            is ComicsListState.Failure -> return ComicsListState.Failure(Constant.ERR_COMICS_FETCHING)
+            is ComicsListState.Success -> {
+                localComics = ComicMapper.mapComicsToComicEntities(comicsListState.comics, characterId)
+                localDataSource.insertComics(localComics)
+                return  comicsListState
+            }
+        }
     }
 
 }

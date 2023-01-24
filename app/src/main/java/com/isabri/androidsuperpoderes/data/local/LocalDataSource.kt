@@ -1,6 +1,7 @@
 package com.isabri.androidsuperpoderes.data.local
 
 import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
+import com.isabri.androidsuperpoderes.data.local.models.ComicEntity
 import com.isabri.androidsuperpoderes.data.local.models.SerieEntity
 
 interface LocalDataSource {
@@ -9,4 +10,6 @@ interface LocalDataSource {
     fun insertCharacters(characterEntities: List<CharacterEntity>)
     fun getSeriesByCharacterId(characterId: String): List<SerieEntity>
     fun insertSeries(serieEntities: List<SerieEntity>)
+    fun getComicsByCharacterId(characterId: String): List<ComicEntity>
+    fun insertComics(comicEntities: List<ComicEntity>)
 }
