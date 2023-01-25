@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDataSource {
     fun countCharacters(): Int
     fun getCharactersFlow(): Flow<List<CharacterEntity>>
-    fun getCharacters(): List<CharacterEntity>
     fun getCharacter(characterId: String): Flow<List<CharacterEntity>>
     fun getFavoriteCharacters(): List<CharacterEntity>
     fun updateCharacter(characterEntity: CharacterEntity)

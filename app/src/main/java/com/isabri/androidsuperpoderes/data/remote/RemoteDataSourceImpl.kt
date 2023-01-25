@@ -26,30 +26,6 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): Remo
         }
     }
 
-    override suspend fun getCharacters(): CharactersListState {
-        val charactersDataWrapper= api.getCharactersDataWrapper()
-
-        if (charactersDataWrapper.isSuccessful) {
-            val remoteCharacters = charactersDataWrapper.body()?.data?.results
-            remoteCharacters?.apply {
-                return CharactersListState.Success(CharacterMapper.mapRemoteCharactersToCharacters(this))
-            }
-        }
-        return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
-    }
-
-    override suspend fun getCharacter(characterId: String): CharactersListState {
-        val charactersDataWrapper= api.getCharacterDataWrapper(characterId)
-
-        if (charactersDataWrapper.isSuccessful) {
-            val remoteCharacters = charactersDataWrapper.body()?.data?.results
-            remoteCharacters?.apply {
-                return CharactersListState.Success(CharacterMapper.mapRemoteCharactersToCharacters(this))
-            }
-        }
-        return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
-    }
-
     override suspend fun getSeries(characterId: String): SeriesListState {
         val seriesDataWrapper = api.getSeriesDataWrapper(characterId)
 

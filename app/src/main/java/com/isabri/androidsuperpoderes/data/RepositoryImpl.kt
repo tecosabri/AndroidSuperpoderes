@@ -51,7 +51,7 @@ class RepositoryImpl @Inject constructor(
 //    }
 
     override fun getCharacter(characterId: String): Flow<List<Character>> {
-        // At this point, the character should have been stored
+        // At this point, the character should have been stored following the app flow (first characters list, then character detail)
         return localDataSource.getCharacter(characterId).map { CharacterMapper.mapCharacterEntitiesToCharacters(it) }
     }
 

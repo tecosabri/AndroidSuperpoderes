@@ -13,7 +13,6 @@ class Constant {
         // ENDPOINTS
         const val BASE_URL = "https://gateway.marvel.com"
         const val CHARACTERS_ENDPOINT = "/v1/public/characters"
-        const val CHARACTER_ENDPOINT = "/v1/public/characters/{characterId}"
         const val SERIES_ENDPOINT = "/v1/public/characters/{characterId}/series"
         const val COMICS_ENDPOINT = "/v1/public/characters/{characterId}/comics"
 

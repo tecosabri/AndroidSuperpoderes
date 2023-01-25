@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
     fun getCharactersFlow(): Flow<List<CharacterRemote>>
-    suspend fun getCharacters(): CharactersListState
-    suspend fun getCharacter(characterId: String): CharactersListState
     suspend fun getSeries(characterId: String): SeriesListState
     suspend fun getComics(characterId: String): ComicsListState
 }
