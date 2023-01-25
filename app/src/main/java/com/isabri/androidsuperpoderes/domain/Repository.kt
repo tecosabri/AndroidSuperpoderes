@@ -1,9 +1,7 @@
 package com.isabri.androidsuperpoderes.domain
 
 
-import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.domain.models.Character
-import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import kotlinx.coroutines.flow.Flow

@@ -1,10 +1,8 @@
 package com.isabri.androidsuperpoderes.ui.characterDetail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
 import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.utils.Constant

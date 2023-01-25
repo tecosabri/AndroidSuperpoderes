@@ -1,18 +1,14 @@
 package com.isabri.androidsuperpoderes.data
 
-import android.util.Log
 import com.isabri.androidsuperpoderes.data.local.LocalDataSource
-import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
 import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
 import com.isabri.androidsuperpoderes.data.remote.RemoteDataSource
-import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
-import com.isabri.androidsuperpoderes.domain.models.Serie
 import com.isabri.androidsuperpoderes.utils.Constant
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

@@ -2,14 +2,12 @@ package com.isabri.androidsuperpoderes.ui.charactersList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
 import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
