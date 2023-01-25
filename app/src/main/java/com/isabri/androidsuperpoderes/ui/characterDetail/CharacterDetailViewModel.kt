@@ -20,10 +20,6 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
     val character: StateFlow<Character>
         get() = _character
 
-    private val _fivecharacters = MutableStateFlow(listOf(Constant.getRandomCharacter()) )
-    val fivecharacters: StateFlow<List<Character>>
-        get() = _fivecharacters
-
     private val _fetchingError = MutableStateFlow(Constant.ERR_NONE)
     val fetchingError: StateFlow<String>
         get() = _fetchingError
@@ -46,8 +42,7 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
 
     private fun setFavorite(favorite: Boolean) {
         val newCharacter = _character.value.copy(favorite = favorite)
-        repository.updateCharacter(newCharacter)
-//        _character.value = newCharacter
+        repository.updateCharacter(newCharacter) // Hot flow updates character reactively
     }
 
     @AssistedFactory

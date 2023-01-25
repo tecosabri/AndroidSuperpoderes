@@ -14,31 +14,41 @@ import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.domain.models.Serie
 import com.isabri.androidsuperpoderes.utils.Constant
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
     ): Repository {
-
-    override suspend fun getCharacters(): CharactersListState {
-        var localCharacters = localDataSource.getCharacters()
-        // Characters already locally stored
-        if(localCharacters.isNotEmpty()) return CharactersListState.Success(CharacterMapper.mapCharacterEntitiesToCharacters(localCharacters))
-        // Characters not locally stored -> store them
-        val charactersListState = remoteDataSource.getCharacters()
-        when(charactersListState) {
-            is CharactersListState.Failure -> return CharactersListState.Failure(Constant.ERR_CHARACTERS_FETCHING)
-            is CharactersListState.Success -> {
-                localCharacters = CharacterMapper.mapCharactersToCharacterEntities(charactersListState.characters)
-                localDataSource.insertCharacters(localCharacters)
-                return charactersListState
+    override fun getCharacters(): Flow<List<Character>> {
+        return localDataSource.getCharactersFlow()
+            .map {
+                var characters: List<Character> = CharacterMapper.mapCharacterEntitiesToCharacters(it)
+                // If not locally stored -> store it
+                if(it.isEmpty()) {
+                    characters = remoteDataSource.getCharactersFlow()
+                        .map { remoteCharacters -> CharacterMapper.mapRemoteCharactersToCharacterEntities(remoteCharacters) }
+                        .onEach {  characterEntities -> localDataSource.insertCharacters(characterEntities)}
+                        .map { characterEntities ->
+                        CharacterMapper.mapCharacterEntitiesToCharacters(characterEntities)}.toList().first()
+                }
+                characters
             }
-        }
     }
+
+//    override fun getCharacters(): Flow<List<Character>> {
+//        // Characters not locally stored
+//        if(localDataSource.countCharacters() == 0) {
+//            return remoteDataSource.getCharactersFlow()
+//                .map { remoteCharacters -> CharacterMapper.mapRemoteCharactersToCharacterEntities(remoteCharacters) }
+//                .onEach { characters -> localDataSource.insertCharacters(characters)}
+//                .map { characterEntities -> CharacterMapper.mapCharacterEntitiesToCharacters(characterEntities) }
+//        }
+//        return localDataSource.getCharactersFlow().map {
+//            CharacterMapper.mapCharacterEntitiesToCharacters(it)
+//        }
+//    }
 
     override fun getCharacter(characterId: String): Flow<List<Character>> {
         // At this point, the character should have been stored

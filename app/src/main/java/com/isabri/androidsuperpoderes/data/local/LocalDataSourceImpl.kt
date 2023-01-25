@@ -8,6 +8,14 @@ import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val characterDAO: CharacterDAO): LocalDataSource {
 
+    override fun countCharacters(): Int {
+        return characterDAO.countCharacters()
+    }
+
+    override fun getCharactersFlow(): Flow<List<CharacterEntity>> {
+        return characterDAO.getAllCharactersFlow()
+    }
+
     override fun getCharacters(): List<CharacterEntity> {
         return characterDAO.getAllCharacters()
     }

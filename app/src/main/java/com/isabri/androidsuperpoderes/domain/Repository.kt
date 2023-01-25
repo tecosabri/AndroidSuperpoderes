@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface Repository {
-    suspend fun getCharacters(): CharactersListState
+    fun getCharacters(): Flow<List<Character>>
     fun getCharacter(characterId: String): Flow<List<Character>>
     fun updateCharacter(character: Character)
     suspend fun getSeries(characterId: String): SeriesListState

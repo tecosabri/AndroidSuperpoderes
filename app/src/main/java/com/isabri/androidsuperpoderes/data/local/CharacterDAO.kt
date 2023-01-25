@@ -14,6 +14,14 @@ import kotlinx.coroutines.flow.Flow
 interface CharacterDAO {
 
     @WorkerThread
+    @Query("SELECT COUNT(id) FROM ${Constant.DB_CHARACTERS} ")
+    fun countCharacters(): Int
+
+    @WorkerThread
+    @Query("SELECT * FROM ${Constant.DB_CHARACTERS}")
+    fun getAllCharactersFlow(): Flow<List<CharacterEntity>>
+
+    @WorkerThread
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS}")
     fun getAllCharacters(): List<CharacterEntity>
 

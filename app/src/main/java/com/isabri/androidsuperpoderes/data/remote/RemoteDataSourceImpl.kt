@@ -3,14 +3,28 @@ package com.isabri.androidsuperpoderes.data.remote
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
 import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
+import com.isabri.androidsuperpoderes.data.remote.models.character.CharacterRemote
 import com.isabri.androidsuperpoderes.data.remote.models.states.CharactersListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import com.isabri.androidsuperpoderes.domain.models.Comic
 import com.isabri.androidsuperpoderes.utils.Constant
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): RemoteDataSource {
+
+    override fun getCharactersFlow(): Flow<List<CharacterRemote>> {
+        return flow {
+            val charactersDataWrapper = api.getCharactersDataWrapper()
+            if(charactersDataWrapper.isSuccessful) {
+                charactersDataWrapper.body()?.data?.results?.let { emit(it) }
+            } else {
+                emit(emptyList())
+            }
+        }
+    }
 
     override suspend fun getCharacters(): CharactersListState {
         val charactersDataWrapper= api.getCharactersDataWrapper()
