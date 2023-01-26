@@ -22,8 +22,8 @@ interface CharacterDAO {
     fun getAllCharactersFlow(): Flow<List<CharacterEntity>>
 
     @WorkerThread
-    @Query("SELECT * FROM ${Constant.DB_CHARACTERS}")
-    fun getAllCharacters(): List<CharacterEntity>
+    @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE favorite = 1")
+    fun getAllFavoriteCharactersFlow(): Flow<List<CharacterEntity>>
 
     @WorkerThread
     @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE id = :characterId")
@@ -31,10 +31,6 @@ interface CharacterDAO {
 
     @Update(entity = CharacterEntity::class)
     fun updateCharacter(characterEntity: CharacterEntity)
-
-    @WorkerThread
-    @Query("SELECT * FROM ${Constant.DB_CHARACTERS} WHERE favorite = 1")
-    fun getAllFavoriteCharacters(): List<CharacterEntity>
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)

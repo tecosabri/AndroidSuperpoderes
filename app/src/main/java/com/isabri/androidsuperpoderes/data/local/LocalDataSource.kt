@@ -9,7 +9,7 @@ interface LocalDataSource {
     fun countCharacters(): Int
     fun getCharactersFlow(): Flow<List<CharacterEntity>>
     fun getCharacter(characterId: String): Flow<List<CharacterEntity>>
-    fun getFavoriteCharacters(): List<CharacterEntity>
+    fun getFavoriteCharacters(): Flow<List<CharacterEntity>>
     fun updateCharacter(characterEntity: CharacterEntity)
     fun insertCharacters(characterEntities: List<CharacterEntity>)
     fun getSeriesByCharacterId(characterId: String): List<SerieEntity>

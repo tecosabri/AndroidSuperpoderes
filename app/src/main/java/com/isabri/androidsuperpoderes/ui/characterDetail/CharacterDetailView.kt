@@ -57,17 +57,6 @@ fun CharacterDetailView(characterId: String, onClickedButton: (String) -> Unit) 
     }
 }
 
-
-@Preview
-@Composable
-fun PreviewNameAndFavoriteRow() {
-        NameAndFavoriteRow(
-            name = "nameveDDDWDWDWDWDWDWDWDWDWDWDWDWDWDWDWDWea",
-            favorite = true,
-            onClickFavorite = {Log.d("FAVORITE", "pressed favorite")}
-        )
-}
-
 @Composable
 fun NameAndFavoriteRow(name: String, favorite: Boolean, onClickFavorite: (Boolean) -> Unit) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp

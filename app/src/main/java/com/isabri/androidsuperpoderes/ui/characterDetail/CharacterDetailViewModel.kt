@@ -9,6 +9,7 @@ import com.isabri.androidsuperpoderes.utils.Constant
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -27,7 +28,7 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
     }
 
     fun getCharacter(characterId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getCharacter(characterId).collect {
                 _character.value = it.get(0)
             }
@@ -40,7 +41,9 @@ class CharacterDetailViewModel @AssistedInject constructor(private val repositor
 
     private fun setFavorite(favorite: Boolean) {
         val newCharacter = _character.value.copy(favorite = favorite)
-        repository.updateCharacter(newCharacter) // Hot flow updates character reactively
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateCharacter(newCharacter) // Hot flow updates character reactively
+        }
     }
 
     @AssistedFactory

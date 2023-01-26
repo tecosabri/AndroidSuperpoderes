@@ -1,6 +1,7 @@
 package com.isabri.androidsuperpoderes.data
 
 import com.isabri.androidsuperpoderes.data.local.LocalDataSource
+import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.data.mappers.CharacterMapper
 import com.isabri.androidsuperpoderes.data.mappers.ComicMapper
 import com.isabri.androidsuperpoderes.data.mappers.SerieMapper
@@ -45,6 +46,10 @@ class RepositoryImpl @Inject constructor(
 //            CharacterMapper.mapCharacterEntitiesToCharacters(it)
 //        }
 //    }
+
+    override fun getFavoriteCharacters(): Flow<List<Character>> {
+        return localDataSource.getFavoriteCharacters().map { CharacterMapper.mapCharacterEntitiesToCharacters(it) }
+    }
 
     override fun getCharacter(characterId: String): Flow<List<Character>> {
         // At this point, the character should have been stored following the app flow (first characters list, then character detail)

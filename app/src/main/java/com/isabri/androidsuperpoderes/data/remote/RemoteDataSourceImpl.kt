@@ -16,7 +16,11 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelAPI): Remo
         return flow {
             val charactersDataWrapper = api.getCharactersDataWrapper()
             if(charactersDataWrapper.isSuccessful) {
-                charactersDataWrapper.body()?.data?.results?.let { emit(it) }
+                charactersDataWrapper.body()?.data?.results?.let { charactersRemote ->
+                    // Remove characters without photo
+                    val charactersRemoteFiltered = charactersRemote.filter { !it.thumbnail?.path?.contains("image_not_available")!! }
+                    emit(charactersRemoteFiltered)
+                }
             } else {
                 emit(emptyList())
             }

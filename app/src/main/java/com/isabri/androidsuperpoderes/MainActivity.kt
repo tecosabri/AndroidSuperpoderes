@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.isabri.androidsuperpoderes.ui.characterDetail.CharacterDetailView
 import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListView
+import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListWithScaffold
 import com.isabri.androidsuperpoderes.ui.comicsList.ComicsListView
 import com.isabri.androidsuperpoderes.ui.seriesList.SeriesListView
 import com.isabri.androidsuperpoderes.ui.theme.AndroidSuperpoderesTheme
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = Constant.NAV_CHARACTERS){
                         // CHARACTERS LIST VIEW (ENTRY POINT)
                         composable(route = Constant.NAV_CHARACTERS){
-                            CharactersListView { id ->
+                            CharactersListWithScaffold { id ->
                                 navController.navigate("${Constant.NAV_CHARACTER}/$id")
                             }
                         }

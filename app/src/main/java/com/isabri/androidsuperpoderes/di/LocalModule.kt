@@ -20,7 +20,7 @@ object LocalModule {
             context,
             CharacterDatabase::class.java, "Character-database"
         )
-            .allowMainThreadQueries()
+//            .allowMainThreadQueries()
             .build()
     }
 

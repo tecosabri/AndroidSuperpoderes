@@ -6,6 +6,7 @@ import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,11 +27,20 @@ class CharactersListViewModel @Inject constructor(private val repository: Reposi
         getCharacters()
     }
 
-    fun getCharacters() {
-        viewModelScope.launch {
-            repository.getCharacters().collect() {
-                if(it.isEmpty()) _fetchingError.value = Constant.ERR_CHARACTERS_FETCHING
-                if(it.isNotEmpty())_characters.value = it
+    fun getCharacters(favorites: Boolean = false) {
+        if(!favorites) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getCharacters().collect() {
+                    if (it.isEmpty()) _fetchingError.value = Constant.ERR_CHARACTERS_FETCHING
+                    if (it.isNotEmpty()) _characters.value = it
+                }
+            }
+        }
+        if(favorites) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getFavoriteCharacters().collect() {
+                    _characters.value = it
+                }
             }
         }
     }
