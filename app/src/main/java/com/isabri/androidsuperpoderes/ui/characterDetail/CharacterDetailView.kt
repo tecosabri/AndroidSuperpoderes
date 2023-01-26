@@ -2,7 +2,6 @@ package com.isabri.androidsuperpoderes.ui.characterDetail
 
 import android.app.Activity
 import android.util.Log
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,10 +13,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.isabri.androidsuperpoderes.di.ViewModelFactoryProvider
@@ -57,40 +58,47 @@ fun CharacterDetailView(characterId: String, onClickedButton: (String) -> Unit) 
 }
 
 
+@Preview
+@Composable
+fun PreviewNameAndFavoriteRow() {
+        NameAndFavoriteRow(
+            name = "nameveDDDWDWDWDWDWDWDWDWDWDWDWDWDWDWDWDWea",
+            favorite = true,
+            onClickFavorite = {Log.d("FAVORITE", "pressed favorite")}
+        )
+}
+
 @Composable
 fun NameAndFavoriteRow(name: String, favorite: Boolean, onClickFavorite: (Boolean) -> Unit) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     Row(
         modifier = Modifier
-            .width(500.dp)
+            .width(screenWidth - 20.dp)
             .background(Color.Transparent)
-            .padding(horizontal = 10.dp),
+            .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center) {
-        NameText(name = name)
-        FavoriteIcon(favorite = favorite, onClickFavorite)
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+        )
+        Text(
+            text = name,
+            color = Color.White,
+            style = MaterialTheme.typography.h6.copy(fontWeight = FontWeight.Light),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 20.dp)
+        )
+        Image(
+            painter = if(favorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_not_favorite),
+            contentDescription = if (favorite) "Favorite" else "Not favorite",
+            modifier = Modifier
+                .weight(1f)
+                .clickable { onClickFavorite(!favorite) } // Toggle favorite
+        )
     }
-}
-
-@Composable
-fun FavoriteIcon(favorite: Boolean, onClick: (Boolean) -> Unit) {
-    Image(
-        painter = if(favorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_not_favorite),
-        contentDescription = if (favorite) "Favorite" else "Not favorite",
-        modifier = Modifier
-            .clickable { onClick(!favorite) } // Toggle favorite
-    )
-}
-
-@Composable
-fun NameText(name: String) {
-    Text(
-        text = name,
-        style = MaterialTheme.typography.h4,
-        color = Color.White,
-        modifier = Modifier
-            .padding(vertical = 20.dp)
-    )
-
 }
 
 @Composable
@@ -107,9 +115,11 @@ fun DescriptionText(text: String) {
 
 @Composable
 fun NavigationButtonsRow(onClickedButton: (String) -> Unit) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+
     Row(
         modifier = Modifier
-            .width(500.dp)
+            .width(screenWidth)
             .background(Color.Transparent)
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
