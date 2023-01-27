@@ -7,6 +7,7 @@ import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeCharacterData
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeLocalDataSource
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeRemoteDataSource
+import com.isabri.androidsuperpoderes.ui.characterDetail.CharacterDetailViewModel
 import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -17,19 +18,19 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CharactersListViewModelTests {
+class CharacterDetailViewModelTests {
 
     lateinit var fakeLocalDataSource: FakeLocalDataSource
     lateinit var fakeRemoteDataSource: FakeRemoteDataSource
     lateinit var repository: Repository
-    lateinit var sut: CharactersListViewModel
+    lateinit var sut: CharacterDetailViewModel
 
     @Before
     fun setUp() {
         fakeLocalDataSource = FakeLocalDataSource()
         fakeRemoteDataSource = FakeRemoteDataSource()
         repository = RepositoryImpl(fakeRemoteDataSource, fakeLocalDataSource)
-        sut = CharactersListViewModel(repository)
+        sut = CharacterDetailViewModel(repository, "0")
     }
 
     @Test
@@ -41,7 +42,7 @@ class CharactersListViewModelTests {
         val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
             repository.getCharacters().toList(actualList)
         }
-        fakeLocalDataSource.emit(FakeCharacterData.getFakeEntityCharacters())
+        fakeLocalDataSource.emit(listOf(FakeCharacterData.getFakeEntityCharacter(0)))
 
         // THEN
         Truth.assertThat(actualList).isNotEmpty()
@@ -50,20 +51,11 @@ class CharactersListViewModelTests {
     }
 
     @Test
-    fun `WHEN getCharacters() THEN charactersList is not empty`() = runTest {
+    fun `WHEN clickFavorite sut THEN favorite characters are updated`() = runTest {
         // GIVEN
-        fakeLocalDataSource.setSharedValue(true)
         // WHEN
-        sut.getCharacters(true)
-        val actualList = mutableListOf<List<Character>>()
-        val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
-            repository.getFavoriteCharacters().toList(actualList)
-        }
-        fakeLocalDataSource.emit(FakeCharacterData.getFakeEntityCharacters())
-
+        sut.onClickFavorite(true)
         // THEN
-        Truth.assertThat(actualList).isNotEmpty()
-        // FINALLY
-        collectJob.cancel()
+        Truth.assertThat(fakeLocalDataSource.fakeLocalCharacterEntities).isNotEmpty()
     }
 }

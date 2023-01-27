@@ -28,7 +28,11 @@ fun CharactersListWithScaffold(onClickedCharacter: (Int) -> Unit) {
 
     Scaffold(
         scaffoldState = scaffoldState,
-        floatingActionButton = { FloatingActionButton(
+        floatingActionButton = {
+            // Floating action button: represents the main action in the view. This is the case
+            // of the "directions" button of the google maps. In this case, the action assigned
+            // to it is the filtering of the list by liked characters.
+            FloatingActionButton(
             backgroundColor = Color.White,
             modifier = Modifier.border(BorderStroke(1.dp, Color.LightGray), CircleShape),
             onClick = {

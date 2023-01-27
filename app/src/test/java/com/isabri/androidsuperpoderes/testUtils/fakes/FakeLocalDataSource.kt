@@ -10,16 +10,24 @@ import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeCharacterData
 import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeComicData
 import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeSerieData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 
 class FakeLocalDataSource: LocalDataSource {
-
+    var shared = false
     var flag = false
     var fakeLocalCharacterEntities = mutableListOf<CharacterEntity>()
     var fakeLocalSerieEntities = mutableListOf<SerieEntity>()
     var fakeLocalComicEntities = mutableListOf<ComicEntity>()
+    private val sharedFlow = MutableSharedFlow<List<CharacterEntity>>()
 
 
+    fun getSharedValue(): Boolean {
+        return shared
+    }
+    fun setSharedValue(shared: Boolean) {
+        this.shared = shared
+    }
     fun getFlagValue(): Boolean {
         return flag
     }
@@ -27,12 +35,17 @@ class FakeLocalDataSource: LocalDataSource {
         this.flag = flag
     }
 
+    suspend fun emit(list: List<CharacterEntity>){
+        sharedFlow.emit(list)
+    }
+
     override fun countCharacters(): Int {
         TODO("Not yet implemented")
     }
 
     override fun getCharactersFlow(): Flow<List<CharacterEntity>> {
-        return if(flag) flow {
+        return if(shared) sharedFlow
+        else if(flag) flow {
             val entityCharacters = FakeCharacterData.getFakeEntityCharacters()
             emit(entityCharacters)
         } else flow { emit(emptyList()) }
@@ -46,7 +59,8 @@ class FakeLocalDataSource: LocalDataSource {
     }
 
     override fun getFavoriteCharacters(): Flow<List<CharacterEntity>> {
-        return flow {
+        return if(shared) return sharedFlow
+            else flow {
             val entityCharacters = FakeCharacterData.getFakeEntityCharacters().map { it.copy(favorite = true) }
             emit(entityCharacters)
         }
