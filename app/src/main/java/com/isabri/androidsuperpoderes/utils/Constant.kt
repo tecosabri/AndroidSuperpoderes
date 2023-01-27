@@ -19,10 +19,6 @@ class Constant {
         // PATHS
         const val PATH_CHARACTER_ID = "characterId"
 
-        // URL QUERY PARAMETERS
-        const val NAME = "name"
-        const val RESULTS_LIMIT = 100
-
         // KEYS
         val ts = Timestamp(System.currentTimeMillis()).time.toString()
         const val PUBLIC_KEY = "5ed7dc76b420bc84a2d4a15450c50f4a"
