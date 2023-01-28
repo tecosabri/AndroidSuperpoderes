@@ -113,14 +113,8 @@ fun NavigationButtonsRow(onClickedButton: (String) -> Unit) {
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly){
-        NavigationButton(text = "Series") {
-            onClickedButton(Constant.NAV_SERIES)
-            Log.d("SERIES", "Series")
-        }
-        NavigationButton(text = "Comics") {
-            onClickedButton(Constant.NAV_COMICS)
-            Log.d("Comics", "Comics")
-        }
+        NavigationButton(text = "Series") { onClickedButton(Constant.NAV_SERIES) }
+        NavigationButton(text = "Comics") { onClickedButton(Constant.NAV_COMICS) }
     }
 }
 
