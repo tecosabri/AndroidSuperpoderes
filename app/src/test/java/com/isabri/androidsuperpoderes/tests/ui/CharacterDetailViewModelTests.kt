@@ -2,13 +2,17 @@ package com.isabri.androidsuperpoderes.tests.ui
 
 import com.google.common.truth.Truth
 import com.isabri.androidsuperpoderes.data.RepositoryImpl
+import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
+import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
 import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeCharacterData
+import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeSerieData
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeLocalDataSource
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeRemoteDataSource
 import com.isabri.androidsuperpoderes.ui.characterDetail.CharacterDetailViewModel
 import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListViewModel
+import com.isabri.androidsuperpoderes.ui.seriesList.SeriesListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -43,7 +47,6 @@ class CharacterDetailViewModelTests {
             repository.getCharacters().toList(actualList)
         }
         fakeLocalDataSource.emit(listOf(FakeCharacterData.getFakeEntityCharacter(0)))
-
         // THEN
         Truth.assertThat(actualList).isNotEmpty()
         // FINALLY
@@ -55,7 +58,13 @@ class CharacterDetailViewModelTests {
         // GIVEN
         // WHEN
         sut.onClickFavorite(true)
+        var localFavoriteCharacterEntities = listOf<CharacterEntity>()
+        val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
+            localFavoriteCharacterEntities = fakeLocalDataSource.fakeLocalCharacterEntities
+        }
         // THEN
-        Truth.assertThat(fakeLocalDataSource.fakeLocalCharacterEntities).isNotEmpty()
+        Truth.assertThat(localFavoriteCharacterEntities[0].name).isEqualTo("fakeNameEntity")
+        // FINALLY
+        collectJob.cancel()
     }
 }

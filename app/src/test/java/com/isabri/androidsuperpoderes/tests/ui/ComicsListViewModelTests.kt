@@ -2,10 +2,13 @@ package com.isabri.androidsuperpoderes.tests.ui
 
 import com.google.common.truth.Truth
 import com.isabri.androidsuperpoderes.data.RepositoryImpl
+import com.isabri.androidsuperpoderes.data.local.models.ComicEntity
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.domain.Repository
 import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeCharacterData
+import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeComicData
+import com.isabri.androidsuperpoderes.testUtils.FakeData.FakeSerieData
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeLocalDataSource
 import com.isabri.androidsuperpoderes.testUtils.fakes.FakeRemoteDataSource
 import com.isabri.androidsuperpoderes.ui.charactersList.CharactersListViewModel
@@ -36,18 +39,23 @@ class ComicsListViewModelTests {
 
     @Test
     fun `GIVEN a list of comics locally stored WHEN init sut THEN comics are availaible`() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         runTest {
             // GIVEN
             val characterId = 0
             fakeLocalDataSource.setFlagValue(true)
             sut = ComicsListViewModel(repository, "0")
             // WHEN
-            sut.getComics(characterId.toString())
+
+            var comicsListState = ComicsListState.Success(listOf(FakeComicData.getFakeComic(0)))
+            val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
+                comicsListState =
+                    ComicsListState.Success(
+                        (repository.getComics(characterId.toString()) as ComicsListState.Success).comics)
+            }
             // THEN
-            Truth.assertThat(sut.comics.value.get(0).title).isEqualTo("fakeTitleEntity")
+            Truth.assertThat(comicsListState.comics[0].title).isEqualTo("fakeTitleEntity")
+            // FINALLY
+            collectJob.cancel()
         }
     }
-
-
 }

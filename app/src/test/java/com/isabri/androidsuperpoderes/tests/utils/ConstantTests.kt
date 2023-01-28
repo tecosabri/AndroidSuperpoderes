@@ -26,6 +26,5 @@ class ConstantTests {
         assertEquals(randomCharacter.description, "randomDescription")
         assertEquals(randomCharacter.thumbnail?.path, "https://upload.wikimedia.org/wikipedia/commons/9/90/Spiderman")
         assertEquals(randomCharacter.favorite, false)
-
     }
 }
