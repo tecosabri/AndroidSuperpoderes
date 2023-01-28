@@ -78,7 +78,7 @@ fun DetailImage(photoURL: String = "https://upload.wikimedia.org/wikipedia/commo
             .data(photoURL)
             .crossfade(true)
             .build(),
-        placeholder = painterResource(id = R.drawable.ic_launcher_background),
+        placeholder = painterResource(id = R.drawable.placeholder_thumbnail_marvel),
         contentDescription = "Character image",
         contentScale = ContentScale.Crop,
         modifier = Modifier

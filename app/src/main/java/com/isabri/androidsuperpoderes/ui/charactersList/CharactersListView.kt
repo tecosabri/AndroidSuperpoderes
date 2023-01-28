@@ -85,8 +85,6 @@ fun CharactersListView(characters: State<List<Character>>, onClicked: (Int) -> U
         itemsIndexed(characters.value) { _, character ->
             character.name?.apply {
                 character.thumbnail?.path?.apply {
-                    Log.d("HERO", "${character.name} has URL: ${character.thumbnail.completePath}")
-
                     DetailView(label = character.name, photoURL = character.thumbnail.completePath) {
                         character.id?.apply {
                             onClicked(this)
