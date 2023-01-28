@@ -29,22 +29,9 @@ fun CharactersListWithScaffold(onClickedCharacter: (Int) -> Unit) {
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            // Floating action button: represents the main action in the view. This is the case
-            // of the "directions" button of the google maps. In this case, the action assigned
-            // to it is the filtering of the list by liked characters.
-            FloatingActionButton(
-            backgroundColor = Color.White,
-            modifier = Modifier.border(BorderStroke(1.dp, Color.LightGray), CircleShape),
-            onClick = {
-                favorite.value = !favorite.value
+            FavoriteFloatingActionButton(favorite = favorite) {
                 charactersListViewModel.getCharacters(favorite.value)
-            }
-        ){
-            Image(
-                painter = if(favorite.value) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_not_favorite),
-                contentDescription = if (favorite.value) "Favorite" else "Not favorite"
-            )
-        } }
+            } }
     ) {
         Box {
             Column {
@@ -65,6 +52,26 @@ fun CharactersListWithScaffold(onClickedCharacter: (Int) -> Unit) {
                 CharactersListView(characters, onClicked = onClickedCharacter)
             }
         }
+    }
+}
+
+@Composable
+fun FavoriteFloatingActionButton(favorite: MutableState<Boolean>, onClick: () -> (Unit)) {
+    // Floating action button: represents the main action in the view. This is the case
+    // of the "directions" button of the google maps. In this case, the action assigned
+    // to it is the filtering of the list by liked characters.
+    FloatingActionButton(
+        backgroundColor = Color.White,
+        modifier = Modifier.border(BorderStroke(1.dp, Color.LightGray), CircleShape),
+        onClick = {
+            favorite.value = !favorite.value
+            onClick()
+        }
+    ){
+        Image(
+            painter = if(favorite.value) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_not_favorite),
+            contentDescription = if (favorite.value) "Favorite" else "Not favorite"
+        )
     }
 }
 
