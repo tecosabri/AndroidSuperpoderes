@@ -33,6 +33,5 @@ class ComicMapper {
         private fun mapComicToComicEntity(comic: Comic, characterId: String): ComicEntity {
             return ComicEntity(comic.id, characterId.toInt(), comic.title, comic.thumbnail, comic.description)
         }
-
     }
 }

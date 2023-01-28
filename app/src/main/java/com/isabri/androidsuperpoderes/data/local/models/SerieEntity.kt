@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.isabri.androidsuperpoderes.data.remote.models.Thumbnail
 
-
 @Entity(tableName = "series")
 data class SerieEntity(
     @PrimaryKey val id: Int?,

@@ -1,6 +1,5 @@
 package com.isabri.androidsuperpoderes.testUtils.FakeData
 
-import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
 import com.isabri.androidsuperpoderes.data.local.models.ComicEntity
 import com.isabri.androidsuperpoderes.data.remote.models.ComicRemote
 import com.isabri.androidsuperpoderes.domain.models.Comic

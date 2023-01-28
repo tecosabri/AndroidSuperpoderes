@@ -15,7 +15,6 @@ import com.isabri.androidsuperpoderes.di.ViewModelFactoryProvider
 import com.isabri.androidsuperpoderes.ui.components.DetailView
 import dagger.hilt.android.EntryPointAccessors
 
-
 @Composable
 fun ComicsListView(characterId: String) {
     val factory = EntryPointAccessors.fromActivity(

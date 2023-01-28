@@ -59,6 +59,5 @@ class CharacterMapper {
                 character.favorite
             )
         }
-
     }
 }

@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-
 class SeriesListViewModel @AssistedInject constructor(private val repository: Repository, @Assisted private val characterId: String): ViewModel() {
 
     private val _series = MutableStateFlow(emptyList<Serie>())

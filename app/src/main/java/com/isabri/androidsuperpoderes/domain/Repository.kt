@@ -1,12 +1,9 @@
 package com.isabri.androidsuperpoderes.domain
 
-
-import com.isabri.androidsuperpoderes.data.local.models.CharacterEntity
-import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.data.remote.models.states.ComicsListState
 import com.isabri.androidsuperpoderes.data.remote.models.states.SeriesListState
+import com.isabri.androidsuperpoderes.domain.models.Character
 import kotlinx.coroutines.flow.Flow
-
 
 interface Repository {
     fun getCharacters(): Flow<List<Character>>

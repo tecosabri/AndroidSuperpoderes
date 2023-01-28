@@ -1,8 +1,9 @@
 package com.isabri.androidsuperpoderes.ui.charactersList
 
-import android.util.Log
-import com.isabri.androidsuperpoderes.domain.models.Character
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.isabri.androidsuperpoderes.domain.models.Character
 import com.isabri.androidsuperpoderes.ui.components.DetailView
 import com.keepcoding.androidsuperpoderes.R
 

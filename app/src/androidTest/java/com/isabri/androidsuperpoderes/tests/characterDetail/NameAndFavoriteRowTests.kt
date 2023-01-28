@@ -2,7 +2,6 @@ package com.isabri.androidsuperpoderes.tests.characterDetail
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.performClick
 import com.isabri.androidsuperpoderes.ui.characterDetail.NameAndFavoriteRow
 import org.junit.Rule
 import org.junit.Test

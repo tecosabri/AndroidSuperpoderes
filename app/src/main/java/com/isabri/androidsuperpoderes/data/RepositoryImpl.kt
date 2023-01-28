@@ -34,19 +34,6 @@ class RepositoryImpl @Inject constructor(
             }
     }
 
-//    override fun getCharacters(): Flow<List<Character>> {
-//        // Characters not locally stored
-//        if(localDataSource.countCharacters() == 0) {
-//            return remoteDataSource.getCharactersFlow()
-//                .map { remoteCharacters -> CharacterMapper.mapRemoteCharactersToCharacterEntities(remoteCharacters) }
-//                .onEach { characters -> localDataSource.insertCharacters(characters)}
-//                .map { characterEntities -> CharacterMapper.mapCharacterEntitiesToCharacters(characterEntities) }
-//        }
-//        return localDataSource.getCharactersFlow().map {
-//            CharacterMapper.mapCharacterEntitiesToCharacters(it)
-//        }
-//    }
-
     override fun getFavoriteCharacters(): Flow<List<Character>> {
         return localDataSource.getFavoriteCharacters().map { CharacterMapper.mapCharacterEntitiesToCharacters(it) }
     }
@@ -91,5 +78,4 @@ class RepositoryImpl @Inject constructor(
             }
         }
     }
-
 }

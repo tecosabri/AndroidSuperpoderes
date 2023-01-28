@@ -39,7 +39,6 @@ class ComicsListViewModel @AssistedInject constructor(private val repository: Re
                 is ComicsListState.Failure -> _fetchingError.value = Constant.ERR_SERIES_FETCHING
                 is ComicsListState.Success -> {
                     _comics.value = comicsListState.comics
-                    Log.d("TAG", "${comics.value.toString()}\n\n\n")
                 }
             }
         }
