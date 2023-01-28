@@ -11,6 +11,7 @@ import com.isabri.androidsuperpoderes.utils.Constant
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class SeriesListViewModel @AssistedInject constructor(private val repository: Re
     }
 
     fun getSeries(characterId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             val seriesListState = repository.getSeries(characterId)
             when(seriesListState) {
                 is SeriesListState.Failure -> _fetchingError.value = Constant.ERR_SERIES_FETCHING
